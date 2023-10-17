@@ -15,3 +15,17 @@ hc<-hclust(distance)
 plot(hc,labels=Biku$Gen)
 rect.hclust(hc, k=4, border = "purple")
 rect.hclust(hc, k=4, border = 2:6)
+#for creation of the Circular Diagram of the Cluster
+#FOR Creation of Circulr Dendrogram
+library(circlize)
+circlize_dendrogram(hc)
+library(dendextend)
+dend <- as.dendrogram(hc)
+dend <- color_branches(dend, k = 4)  
+dend <- set(dend, "branches_lwd", 2)
+par(mar = c(1, 1, 1, 1))  
+circlize_dendrogram(dend, labels_track_height = 0.1) 
+genotype_names <- as.character(Bik$Var)  
+labels(dend) <- genotype_names
+par(mar = c(1, 1, 1, 1))  
+P2<-circlize_dendrogram(dend, labels_track_height = 0.1)
