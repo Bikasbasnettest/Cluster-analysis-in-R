@@ -63,5 +63,22 @@ coef_var <- dissimilarity_coef_var(distance, hc, k)
 
 # Print the coefficient of variation
 print(coef_var)
+###3##33##3###3##3##distance calculation in Cluster analysis ##33#3333333
 
+# cluster data
+pam.mod <- pam(Elimin,4) # create five clusters
+v.pred <- as.integer(pam.mod$clustering) # get cluster ids associated to given data objects
+
+# compute intercluster distances and intracluster diameters
+cls.scatt1 <- cls.scatt.data(Elimin, v.pred)
+cls.scatt1
+cls.scatt2 <- cls.scatt.data(Elimin, v.pred, dist="manhattan")
+cls.scatt2
+cls.scatt3 <- cls.scatt.data(Elimin, v.pred, dist="correlation")
+cls.scatt3
+# the same using dissimilarity matrix
+iris.diss.mx <- as.matrix(daisy(Elimin))
+iris.diss.mx
+cls.scatt4 <- cls.scatt.diss.mx(iris.diss.mx, v.pred)
+cls.scatt4
 
