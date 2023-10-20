@@ -34,5 +34,34 @@ ward_clusters<- hclust(dist_matrix, method = "ward.D2")
 plot(ward_clusters, labels = Biku$Gen, srt = 90, cex = .6, main = "Dendrogram Representation of Maize Genotypes Parameters")
 rect.hclust(ward_clusters, k=8, border = "purple")
 rect.hclust(ward_clusters, k=8, border = 2:6)
+#to calculate the disimilarities coefficient of variations
+
+# Load the required library
+library(fpc)
+
+# Calculate the dissimilarity matrix
+distance <- dist(Elimin)
+
+# Perform hierarchical clustering
+hc <- hclust(distance)
+
+# Define a custom function to calculate the dissimilarity coefficient of variation
+dissimilarity_coef_var <- function(dist_matrix, hclust_object, k) {
+  cluster_sizes <- table(cutree(hclust_object, k = k))
+  total_dissimilarity <- sum(dist_matrix)
+  within_cluster_dissimilarity <- 0
+  for (i in 1:k) {
+    cluster_indices <- which(cutree(hclust_object, k = k) == i)
+    within_cluster_dissimilarity <- within_cluster_dissimilarity + sum(dist_matrix[cluster_indices])
+  }
+  return(within_cluster_dissimilarity / total_dissimilarity)
+}
+
+# Calculate the dissimilarity coefficient of variation for k=4
+k <- 4
+coef_var <- dissimilarity_coef_var(distance, hc, k)
+
+# Print the coefficient of variation
+print(coef_var)
 
 
